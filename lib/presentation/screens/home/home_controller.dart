@@ -18,6 +18,7 @@ class HomeController extends GetxController {
     isLoading.value = true;
     try {
       final fetchedContacts = await _repository.getContacts();
+      fetchedContacts.sort((a, b) => a.firstName.compareTo(b.firstName));
       contacts.assignAll(fetchedContacts);
     } finally {
       isLoading.value = false;
