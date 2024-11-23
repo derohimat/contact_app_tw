@@ -5,7 +5,6 @@ import '../../../data/repositories/contact_repository.dart';
 
 class HomeController extends GetxController {
   final ContactRepository _repository = ContactRepository();
-
   final isLoading = true.obs;
   final contacts = <Contact>[].obs;
 
@@ -23,5 +22,9 @@ class HomeController extends GetxController {
     } finally {
       isLoading.value = false;
     }
+  }
+
+  Contact loggedInUser() {
+    return contacts.first;
   }
 }

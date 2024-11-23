@@ -1,32 +1,81 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../profile/profile_controller.dart';
+import '../profile/profile_screen.dart';
+import 'home_content.dart';
 import 'home_controller.dart';
 
-class HomeScreen extends GetView<HomeController> {
-  const HomeScreen({Key? key}) : super(key: key);
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  int _currentIndex = 0;
+  late final PageController _pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController(initialPage: _currentIndex);
+    Get.put(ProfileController());
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Contacts')),
-      body: Obx(() {
-        if (controller.isLoading.value) {
-          return const Center(child: CircularProgressIndicator());
-        } else if (controller.contacts.isEmpty) {
-          return const Center(child: Text('No contacts found.'));
-        } else {
-          return ListView.builder(
-            itemCount: controller.contacts.length,
-            itemBuilder: (context, index) {
-              final contact = controller.contacts[index];
-              return ListTile(
-                title: Text('${contact.firstName} ${contact.lastName}'),
-              );
-            },
-          );
-        }
-      }),
+      appBar: AppBar(
+        title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile'),
+      ),
+      body: PageView(
+        controller: _pageController,
+        onPageChanged: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
+        children: const [
+          HomeContent(),
+          ProfileScreen(),
+        ],
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _currentIndex,
+        onTap: (index) async {
+          final user = await Get.find<HomeController>().loggedInUser();
+
+          setState(() {
+            _currentIndex = index;
+            _pageController.jumpToPage(index);
+          });
+
+          if (index == 1) {
+            Get.find<ProfileController>().updateProfileData(
+              name: '${user.firstName} ${user.lastName}',
+              email: user.email,
+            );
+          }
+        },
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: 'Profile',
+          ),
+        ],
+      ),
     );
   }
 }
