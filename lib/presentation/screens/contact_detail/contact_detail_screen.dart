@@ -15,7 +15,13 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
     final bool isAddContactMode = controller.contact.value.id.isEmpty;
 
     return Scaffold(
-      appBar: AppBar(title: const Text('Contact Details')),
+      appBar: AppBar(
+        title: const Text('Contact Details'),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios, color: AppColors.black),
+          onPressed: () => Get.back(),
+        ),
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
