@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
+import '../../widgets/initial_avatar.dart';
 import 'contact_detail_controller.dart';
 
 class ContactDetailScreen extends GetView<ContactDetailController> {
@@ -11,12 +12,19 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Contact Detail'),
+        title: const Text('Contact Details'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
+            InitialAvatar(
+              firstName: controller.contact.firstName,
+              lastName: controller.contact.lastName,
+              size: 100.0,
+              textSize: 40.0,
+            ),
+            const SizedBox(height: 20),
             TextField(
               controller: controller.firstNameController,
               decoration: const InputDecoration(labelText: 'First Name'),
