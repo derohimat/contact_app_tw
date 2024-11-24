@@ -34,7 +34,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile')),
+      appBar: AppBar(
+        title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile'),
+        actions: _currentIndex == 1
+            ? [
+                TextButton(
+                  onPressed: () {
+                    // Implement logout functionality
+                    Get.offAllNamed('/');
+                  },
+                  child: const Text(
+                    'Logout',
+                    style: TextStyle(color: AppColors.blue),
+                  ),
+                ),
+              ]
+            : null,
+      ),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -59,10 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
 
           if (index == 1 && user != null) {
-            Get.find<ProfileController>().updateProfileData(
-              name: '${user.firstName} ${user.lastName}',
-              email: user.email,
-            );
+            Get.find<ProfileController>().updateProfileData(contact: user);
           }
         },
         showSelectedLabels: false,

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../widgets/initial_avatar.dart';
+import '../contact_detail/contact_binding.dart';
+import '../contact_detail/contact_detail_screen.dart';
 import 'profile_controller.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
@@ -8,12 +11,47 @@ class ProfileScreen extends GetView<ProfileController> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Obx(() => Text('Name: ${controller.userName}')),
-          Obx(() => Text('Email: ${controller.userEmail}')),
+          Center(
+            child: InitialAvatar(
+              firstName: controller.contact.firstName.split(' ')[0],
+              lastName: controller.contact.lastName.split(' ')[0],
+              size: 100,
+              textSize: 40,
+            ),
+          ),
+          const SizedBox(height: 24.0),
+          const SizedBox(height: 8.0),
+          Text(
+            "${controller.contact.firstName} ${controller.contact.lastName}",
+            style: TextStyle(fontSize: 15.0),
+          ),
+          const SizedBox(height: 16.0),
+          Text(
+            controller.contact.email.toString(),
+            style: TextStyle(fontSize: 15.0),
+          ),
+          const SizedBox(height: 16.0),
+          Text(
+            controller.contact.dob.toString(),
+            style: TextStyle(fontSize: 15.0),
+          ),
+          const SizedBox(height: 24.0),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Get.to(
+                  () => const ContactDetailScreen(),
+                  arguments: controller.contact,
+                  binding: ContactDetailBinding(),
+                );
+              },
+              child: const Text('Update my detail'),
+            ),
+          ),
         ],
       ),
     );

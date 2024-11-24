@@ -1,14 +1,13 @@
 import 'package:get/get.dart';
 
+import '../../../data/models/contact.dart';
+
 class ProfileController extends GetxController {
-  final userName = ''.obs;
-  final userEmail = ''.obs;
+  late Contact contact;
 
   void updateProfileData({
-    required String name,
-    required String email,
+    required Contact contact,
   }) {
-    userName.value = name;
-    userEmail.value = email;
+    this.contact = contact;
   }
 }
