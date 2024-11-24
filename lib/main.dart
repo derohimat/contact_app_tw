@@ -42,6 +42,7 @@ class MyApp extends StatelessWidget {
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
           style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(AppColors.blue),
             backgroundColor: WidgetStateProperty.all<Color>(AppColors.lightBlue),
             textStyle: WidgetStateProperty.all<TextStyle>(
               const TextStyle(color: AppColors.blue, fontSize: 16.0, fontWeight: FontWeight.bold),
@@ -55,6 +56,7 @@ class MyApp extends StatelessWidget {
         ),
         outlinedButtonTheme: OutlinedButtonThemeData(
           style: ButtonStyle(
+            foregroundColor: WidgetStateProperty.all(AppColors.red),
             side: WidgetStateProperty.all<BorderSide>(
               BorderSide(color: AppColors.red, width: 0.5),
             ),
