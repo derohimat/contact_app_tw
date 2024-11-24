@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
@@ -23,11 +24,17 @@ class HomeContent extends GetView<HomeController> {
           padding: const EdgeInsets.all(16.0),
           child: TextField(
             controller: searchController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               hintText: 'Search your contacts list',
-              hintStyle: TextStyle(color: AppColors.darkGray),
-              border: OutlineInputBorder(),
-              suffixIcon: Icon(Icons.search),
+              hintStyle: const TextStyle(color: AppColors.darkGray),
+              border: const OutlineInputBorder(),
+              suffixIcon: Padding(
+                padding: const EdgeInsets.all(12.0),
+                child: SvgPicture.asset(
+                  'assets/icons/search.svg',
+                  color: AppColors.darkGray,
+                ),
+              ),
             ),
             onChanged: (value) {
               searchQuery.value = value;
