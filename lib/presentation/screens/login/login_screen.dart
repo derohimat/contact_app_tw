@@ -18,7 +18,7 @@ class LoginScreen extends GetView<LoginController> {
           children: [
             TextField(
               controller: controller.idController,
-              decoration: const InputDecoration(labelText: 'Enter your ID'),
+              decoration: const InputDecoration(labelText: 'User ID'),
             ),
             const SizedBox(height: 20),
             ElevatedButton(
