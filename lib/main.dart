@@ -1,4 +1,5 @@
 // main.dart
+import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -26,7 +27,16 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Contact App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primaryColor: AppColors.white,
+        dividerColor: AppColors.darkGray,
+        inputDecorationTheme: InputDecorationTheme(
+          border: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.darkGray),
+          ),
+        ),
+        colorScheme: ColorScheme.fromSwatch().copyWith(
+          secondary: AppColors.blue,
+        ),
       ),
       initialRoute: loggedInUserId != null ? '/home' : '/',
       getPages: [
