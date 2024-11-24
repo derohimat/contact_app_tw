@@ -3,6 +3,7 @@ import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'data/services/secure_storage_service.dart';
 import 'presentation/screens/home/home_binding.dart';
@@ -35,6 +36,10 @@ class MyApp extends StatelessWidget {
           shadowColor: AppColors.darkGray,
           systemOverlayStyle: SystemUiOverlayStyle.dark,
           elevation: 4.0,
+          titleTextStyle: TextStyle(color: AppColors.black, fontSize: 23.0, fontWeight: FontWeight.bold),
+        ),
+        textTheme: GoogleFonts.poppinsTextTheme(
+          Theme.of(context).textTheme,
         ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
@@ -51,6 +56,7 @@ class MyApp extends StatelessWidget {
             }
             return TextStyle(color: AppColors.darkGray);
           }),
+          labelStyle: TextStyle(color: AppColors.darkGray.withOpacity(0.6)),
           floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
       ),
