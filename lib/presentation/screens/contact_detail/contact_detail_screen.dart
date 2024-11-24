@@ -11,6 +11,8 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
 
   @override
   Widget build(BuildContext context) {
+    final bool isAddContactMode = controller.contact.value.id.isEmpty;
+
     return Scaffold(
       appBar: AppBar(title: const Text('Contact Details')),
       body: SingleChildScrollView(
@@ -26,6 +28,7 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                   lastName: contact.lastName,
                   size: 100,
                   textSize: 40,
+                  isAddContactMode: isAddContactMode,
                 );
               }),
             ),
@@ -182,7 +185,7 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
               child: ElevatedButton(
                 onPressed: () async {
                   if (controller.validateForm()) {
-                    final updatedContact = Contact(
+                    final newContact = Contact(
                       id: controller.contact.value.id,
                       firstName: controller.firstNameController.text,
                       lastName: controller.lastNameController.text,
@@ -190,24 +193,26 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                       dob: controller.dobController.text,
                       phone: controller.phoneController.text,
                     );
-                    await controller.updateContact(updatedContact);
-                    Get.back(result: updatedContact);
+                    await controller.saveContact(newContact);
+                    Get.back(result: newContact);
                   }
                 },
-                child: const Text('Update'),
+                child: Text(isAddContactMode ? 'Save' : 'Update'),
               ),
             ),
-            const SizedBox(height: 8.0),
-            SizedBox(
-              width: double.infinity,
-              child: OutlinedButton(
-                onPressed: () {
-                  controller.removeContact();
-                  Get.back(result: 'removed');
-                },
-                child: const Text('Remove'),
+            if (!isAddContactMode) ...[
+              const SizedBox(height: 8.0),
+              SizedBox(
+                width: double.infinity,
+                child: OutlinedButton(
+                  onPressed: () {
+                    controller.removeContact();
+                    Get.back(result: 'removed');
+                  },
+                  child: const Text('Remove'),
+                ),
               ),
-            ),
+            ],
           ],
         ),
       ),

@@ -8,6 +8,10 @@ class ContactRepository {
     return await _service.fetchContacts();
   }
 
+  Future<void> addContact(Contact newContact) async {
+    await _service.addContact(newContact);
+  }
+
   Future<void> updateContact(Contact updatedContact) async {
     await _service.updateContact(updatedContact);
   }

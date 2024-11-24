@@ -22,6 +22,10 @@ class ContactApiService {
     }
   }
 
+  Future<void> addContact(Contact newContact) async {
+    _contacts.add(newContact);
+  }
+
   Future<void> updateContact(Contact updatedContact) async {
     final index = _contacts.indexWhere((contact) => contact.id == updatedContact.id);
     if (index != -1) {

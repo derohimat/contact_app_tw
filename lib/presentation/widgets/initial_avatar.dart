@@ -6,6 +6,7 @@ class InitialAvatar extends StatelessWidget {
   final String lastName;
   final double size;
   final double textSize;
+  final bool isAddContactMode;
 
   const InitialAvatar({
     super.key,
@@ -13,6 +14,7 @@ class InitialAvatar extends StatelessWidget {
     required this.lastName,
     this.size = 47.0, // Default size
     this.textSize = 20.0, // Default text size
+    this.isAddContactMode = false,
   });
 
   @override
@@ -34,13 +36,15 @@ class InitialAvatar extends StatelessWidget {
       child: CircleAvatar(
         backgroundColor: Colors.blue,
         radius: size / 2,
-        child: Text(
-          initials.toUpperCase(),
-          style: TextStyle(
-            color: Colors.white,
-            fontSize: textSize,
-          ),
-        ),
+        child: isAddContactMode
+            ? Icon(Icons.person_outline, color: Colors.white, size: textSize)
+            : Text(
+                initials.toUpperCase(),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: textSize,
+                ),
+              ),
       ),
     );
   }

@@ -1,8 +1,11 @@
-import 'package:contact_app_tw/data/services/secure_storage_service.dart';
+import 'package:contact_app_tw/data/models/contact.dart';
 import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../data/services/secure_storage_service.dart';
+import '../contact_detail/contact_binding.dart';
+import '../contact_detail/contact_detail_screen.dart';
 import '../profile/profile_controller.dart';
 import '../profile/profile_screen.dart';
 import 'home_content.dart';
@@ -67,6 +70,26 @@ class _HomeScreenState extends State<HomeScreen> {
           ProfileScreen(),
         ],
       ),
+      floatingActionButton: _currentIndex == 0
+          ? FloatingActionButton(
+              onPressed: () async {
+                final result = await Get.to(
+                  () => const ContactDetailScreen(),
+                  arguments: Contact(id: '', firstName: '', lastName: '', email: '', dob: '', phone: ''),
+                  binding: ContactDetailBinding(),
+                );
+                if (result != null && result is Contact) {
+                  Get.find<HomeController>().fetchContacts();
+                }
+              },
+              backgroundColor: AppColors.blue,
+              shape: const CircleBorder(),
+              child: const Icon(
+                Icons.add,
+                color: AppColors.white,
+              ),
+            )
+          : null,
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: AppColors.white,
         currentIndex: _currentIndex,

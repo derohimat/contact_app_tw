@@ -42,8 +42,12 @@ class ContactDetailController extends GetxController {
         (phoneController.text.isEmpty || isPhoneValid.value);
   }
 
-  Future<void> updateContact(Contact updatedContact) async {
-    await _repository.updateContact(updatedContact);
+  Future<void> saveContact(Contact contact) async {
+    if (contact.id.isEmpty) {
+      await _repository.addContact(contact);
+    } else {
+      await _repository.updateContact(contact);
+    }
   }
 
   Future<void> removeContact() async {
