@@ -36,9 +36,17 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
             ),
             Divider(),
             const SizedBox(height: 8.0),
-            Text(
-              "First Name",
-              style: TextStyle(color: AppColors.black, fontSize: 15.0),
+            RichText(
+              text: TextSpan(
+                text: 'First Name',
+                style: TextStyle(color: AppColors.black, fontSize: 15.0),
+                children: [
+                  TextSpan(
+                    text: ' *',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8.0),
             TextField(
@@ -53,9 +61,17 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
               textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: 16.0),
-            Text(
-              "Last Name",
-              style: TextStyle(color: AppColors.black, fontSize: 15.0),
+            RichText(
+              text: TextSpan(
+                text: 'Last Name',
+                style: TextStyle(color: AppColors.black, fontSize: 15.0),
+                children: [
+                  TextSpan(
+                    text: ' *',
+                    style: TextStyle(color: Colors.red),
+                  ),
+                ],
+              ),
             ),
             const SizedBox(height: 8.0),
             TextField(
