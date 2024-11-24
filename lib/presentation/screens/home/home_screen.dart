@@ -51,14 +51,14 @@ class _HomeScreenState extends State<HomeScreen> {
         backgroundColor: AppColors.white,
         currentIndex: _currentIndex,
         onTap: (index) async {
-          final user = await Get.find<HomeController>().loggedInUser();
+          final user = Get.find<HomeController>().loggedInUser;
 
           setState(() {
             _currentIndex = index;
             _pageController.jumpToPage(index);
           });
 
-          if (index == 1) {
+          if (index == 1 && user != null) {
             Get.find<ProfileController>().updateProfileData(
               name: '${user.firstName} ${user.lastName}',
               email: user.email,

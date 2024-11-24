@@ -7,6 +7,9 @@ class HomeController extends GetxController {
   final ContactRepository _repository = ContactRepository();
   final isLoading = true.obs;
   final contacts = <Contact>[].obs;
+  final String loggedInUserId;
+
+  HomeController(this.loggedInUserId);
 
   @override
   void onInit() {
@@ -25,7 +28,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Contact loggedInUser() {
-    return contacts.first;
+  Contact? get loggedInUser {
+    return contacts.firstWhereOrNull((contact) => contact.id == loggedInUserId);
   }
 }

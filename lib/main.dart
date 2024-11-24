@@ -1,4 +1,3 @@
-// main.dart
 import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,9 +40,16 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),
+        buttonTheme: ButtonThemeData(
+          buttonColor: AppColors.blue,
+          textTheme: ButtonTextTheme.primary,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.darkGray, width: 0.5),
+            borderSide: BorderSide(color: AppColors.lightGray, width: 0.5),
             borderRadius: BorderRadius.circular(8.0),
           ),
           focusedBorder: OutlineInputBorder(
@@ -70,7 +76,7 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: '/home',
           page: () => const HomeScreen(),
-          binding: HomeBinding(),
+          binding: HomeBinding(loggedInUserId!),
         ),
         GetPage(
           name: '/profile',

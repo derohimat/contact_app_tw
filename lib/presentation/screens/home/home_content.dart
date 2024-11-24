@@ -15,6 +15,7 @@ class HomeContent extends GetView<HomeController> {
   Widget build(BuildContext context) {
     final TextEditingController searchController = TextEditingController();
     final RxString searchQuery = ''.obs;
+    final String loggedInUserId = Get.find<HomeController>().loggedInUserId;
 
     return Column(
       children: [
@@ -44,7 +45,7 @@ class HomeContent extends GetView<HomeController> {
                 final query = searchQuery.value.toLowerCase();
                 return contact.firstName.toLowerCase().contains(query) || contact.lastName.toLowerCase().contains(query);
               }).toList();
-              final groupedContacts = _groupContactsByFirstChar(filteredContacts);
+              final groupedContacts = _groupContactsByFirstChar(filteredContacts, loggedInUserId);
               return RefreshIndicator(
                 onRefresh: () async {
                   await controller.fetchContacts();
@@ -53,7 +54,7 @@ class HomeContent extends GetView<HomeController> {
                   itemCount: groupedContacts.length,
                   itemBuilder: (context, index) {
                     final group = groupedContacts.entries.elementAt(index);
-                    return _buildGroup(context, group.key, group.value);
+                    return _buildGroup(context, group.key, group.value, loggedInUserId);
                   },
                 ),
               );
@@ -64,7 +65,7 @@ class HomeContent extends GetView<HomeController> {
     );
   }
 
-  Map<String, List<Contact>> _groupContactsByFirstChar(List<Contact> contacts) {
+  Map<String, List<Contact>> _groupContactsByFirstChar(List<Contact> contacts, String loggedInUserId) {
     final Map<String, List<Contact>> groupedContacts = {};
     for (var contact in contacts) {
       final firstChar = contact.firstName[0].toUpperCase();
@@ -76,7 +77,7 @@ class HomeContent extends GetView<HomeController> {
     return groupedContacts;
   }
 
-  Widget _buildGroup(BuildContext context, String groupKey, List<Contact> contacts) {
+  Widget _buildGroup(BuildContext context, String groupKey, List<Contact> contacts, String loggedInUserId) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -97,24 +98,43 @@ class HomeContent extends GetView<HomeController> {
               ],
             )),
         ...contacts.map(
-          (contact) => ListTile(
-            leading: InitialAvatar(
-              firstName: contact.firstName,
-              lastName: contact.lastName,
-            ),
-            title: Text('${contact.firstName} ${contact.lastName}'),
-            onTap: () async {
-              final result = await Get.to(
-                () => const ContactDetailScreen(),
-                arguments: contact,
-                binding: ContactDetailBinding(),
-              );
-              if (result != null && result is Contact) {
-                final index = controller.contacts.indexOf(contact);
-                controller.contacts[index] = result;
-              }
-            },
-          ),
+          (contact) {
+            final isLoggedInUser = contact.id == loggedInUserId;
+            final displayName = '${contact.firstName} ${contact.lastName}';
+            return ListTile(
+              leading: InitialAvatar(
+                firstName: contact.firstName,
+                lastName: contact.lastName,
+              ),
+              title: isLoggedInUser
+                  ? Row(
+                      children: [
+                        Text(displayName),
+                        const SizedBox(width: 4),
+                        Text(
+                          '(you)',
+                          style: const TextStyle(color: AppColors.darkGray),
+                        )
+                      ],
+                    )
+                  : Text(displayName),
+              titleTextStyle: const TextStyle(
+                color: AppColors.black,
+                fontSize: 15.0,
+              ),
+              onTap: () async {
+                final result = await Get.to(
+                  () => const ContactDetailScreen(),
+                  arguments: contact,
+                  binding: ContactDetailBinding(),
+                );
+                if (result != null && result is Contact) {
+                  final index = controller.contacts.indexOf(contact);
+                  controller.contacts[index] = result;
+                }
+              },
+            );
+          },
         ),
       ],
     );
