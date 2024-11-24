@@ -5,7 +5,7 @@ import '../../../styles/app_colors.dart';
 import 'login_controller.dart';
 
 class LoginScreen extends GetView<LoginController> {
-  const LoginScreen({super.key});
+  const LoginScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

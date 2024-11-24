@@ -21,7 +21,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   final String? loggedInUserId;
 
-  const MyApp({super.key, this.loggedInUserId});
+  const MyApp({Key? key, this.loggedInUserId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

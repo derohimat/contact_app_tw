@@ -10,7 +10,7 @@ import '../contact_detail/contact_detail_screen.dart';
 import 'home_controller.dart';
 
 class HomeContent extends GetView<HomeController> {
-  const HomeContent({super.key});
+  const HomeContent({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class HomeContent extends GetView<HomeController> {
                 padding: const EdgeInsets.all(12.0),
                 child: SvgPicture.asset(
                   'assets/icons/search.svg',
-                  color: AppColors.darkGray,
+                  colorFilter: ColorFilter.mode(AppColors.darkGray, BlendMode.srcIn),
                 ),
               ),
             ),

@@ -9,13 +9,13 @@ class InitialAvatar extends StatelessWidget {
   final bool isAddContactMode;
 
   const InitialAvatar({
-    super.key,
+    Key? key,
     required this.firstName,
     required this.lastName,
     this.size = 47.0, // Default size
     this.textSize = 20.0, // Default text size
     this.isAddContactMode = false,
-  });
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

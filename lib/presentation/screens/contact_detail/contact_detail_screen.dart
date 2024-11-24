@@ -8,7 +8,7 @@ import '../../widgets/initial_avatar.dart';
 import 'contact_detail_controller.dart';
 
 class ContactDetailScreen extends GetView<ContactDetailController> {
-  const ContactDetailScreen({super.key});
+  const ContactDetailScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

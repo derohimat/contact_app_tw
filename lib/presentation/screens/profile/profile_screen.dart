@@ -9,7 +9,7 @@ import '../contact_detail/contact_detail_screen.dart';
 import 'profile_controller.dart';
 
 class ProfileScreen extends GetView<ProfileController> {
-  const ProfileScreen({super.key});
+  const ProfileScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
