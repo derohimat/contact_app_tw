@@ -19,7 +19,7 @@ class HomeContent extends GetView<HomeController> {
     return Column(
       children: [
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          padding: const EdgeInsets.all(16.0),
           child: TextField(
             controller: searchController,
             decoration: const InputDecoration(

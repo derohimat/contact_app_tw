@@ -34,10 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile'),
-        backgroundColor: AppColors.white,
-      ),
+      appBar: AppBar(title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile')),
       body: PageView(
         controller: _pageController,
         onPageChanged: (index) {
@@ -70,6 +67,9 @@ class _HomeScreenState extends State<HomeScreen> {
         },
         showSelectedLabels: false,
         showUnselectedLabels: false,
+        elevation: 4.0,
+        selectedItemColor: AppColors.blue,
+        unselectedItemColor: AppColors.darkGray,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.dashboard),

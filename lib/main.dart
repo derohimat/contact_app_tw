@@ -1,6 +1,7 @@
 // main.dart
 import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 
 import 'data/services/secure_storage_service.dart';
@@ -29,13 +30,28 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.white,
         dividerColor: AppColors.darkGray,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: AppColors.white,
+          shadowColor: AppColors.darkGray,
+          systemOverlayStyle: SystemUiOverlayStyle.dark,
+          elevation: 4.0,
+        ),
         inputDecorationTheme: InputDecorationTheme(
           border: OutlineInputBorder(
-            borderSide: BorderSide(color: AppColors.darkGray),
+            borderSide: BorderSide(color: AppColors.darkGray, width: 0.5),
+            borderRadius: BorderRadius.circular(8.0),
           ),
-        ),
-        colorScheme: ColorScheme.fromSwatch().copyWith(
-          secondary: AppColors.blue,
+          focusedBorder: OutlineInputBorder(
+            borderSide: BorderSide(color: AppColors.blue, width: 0.5),
+            borderRadius: BorderRadius.circular(8.0),
+          ),
+          hintStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
+            if (states.contains(WidgetState.focused)) {
+              return TextStyle(color: AppColors.blue);
+            }
+            return TextStyle(color: AppColors.darkGray);
+          }),
+          floatingLabelBehavior: FloatingLabelBehavior.never,
         ),
       ),
       initialRoute: loggedInUserId != null ? '/home' : '/',
