@@ -27,7 +27,7 @@ class LoginController extends GetxController {
       // Store the logged-in user's ID using SecureStorageService
       await SecureStorageService.setLoggedInUserId(loggedInUser.id);
 
-      Get.to(
+      Get.offAll(
         () => const HomeScreen(),
         binding: HomeBinding(loggedInUser.id),
       );
