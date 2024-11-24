@@ -1,3 +1,4 @@
+import 'package:contact_app_tw/utils/date_format_util.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -33,17 +34,17 @@ class ProfileScreen extends GetView<ProfileController> {
             ),
             const SizedBox(height: 16.0),
             Text(
-              contact.email,
+              contact.email.isEmpty ? '-' : contact.email,
               style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 16.0),
             Text(
-              contact.phone,
+              contact.phone.isEmpty ? '-' : contact.phone,
               style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 16.0),
             Text(
-              contact.dob,
+              contact.dob.isEmpty ? '-' : DateFormatUtil.format(DateFormatUtil.parse(contact.dob) ?? DateTime.now()),
               style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 24.0),

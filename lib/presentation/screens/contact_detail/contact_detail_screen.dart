@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
+import '../../../utils/date_format_util.dart';
 import '../../widgets/initial_avatar.dart';
 import 'contact_detail_controller.dart';
 
@@ -175,7 +176,7 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                   lastDate: DateTime.now(),
                 );
                 if (pickedDate != null) {
-                  controller.dobController.text = pickedDate.toString();
+                  controller.dobController.text = DateFormatUtil.format(pickedDate);
                 }
               },
             ),
