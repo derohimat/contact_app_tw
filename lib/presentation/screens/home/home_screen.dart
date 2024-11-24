@@ -1,3 +1,4 @@
+import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -35,6 +36,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(_currentIndex == 0 ? 'My Contacts' : 'My Profile'),
+        backgroundColor: AppColors.white,
       ),
       body: PageView(
         controller: _pageController,
@@ -49,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: AppColors.white,
         currentIndex: _currentIndex,
         onTap: (index) async {
           final user = await Get.find<HomeController>().loggedInUser();
@@ -65,13 +68,15 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           }
         },
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.home),
+            icon: Icon(Icons.dashboard),
             label: 'Home',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+            icon: Icon(Icons.person_outline),
             label: 'Profile',
           ),
         ],

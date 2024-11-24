@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
+import '../../../styles/app_colors.dart';
 import '../../widgets/initial_avatar.dart';
 import '../contact_detail/contact_binding.dart';
 import '../contact_detail/contact_detail_screen.dart';
@@ -12,27 +13,55 @@ class HomeContent extends GetView<HomeController> {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() {
-      if (controller.isLoading.value) {
-        return const Center(child: CircularProgressIndicator());
-      } else if (controller.contacts.isEmpty) {
-        return const Center(child: Text('No contacts found.'));
-      } else {
-        final groupedContacts = _groupContactsByFirstChar(controller.contacts);
-        return RefreshIndicator(
-          onRefresh: () async {
-            await controller.fetchContacts();
-          },
-          child: ListView.builder(
-            itemCount: groupedContacts.length,
-            itemBuilder: (context, index) {
-              final group = groupedContacts.entries.elementAt(index);
-              return _buildGroup(context, group.key, group.value);
+    final TextEditingController searchController = TextEditingController();
+    final RxString searchQuery = ''.obs;
+
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: TextField(
+            controller: searchController,
+            decoration: const InputDecoration(
+              hintText: 'Search your contacts list',
+              hintStyle: TextStyle(color: AppColors.darkGray),
+              border: OutlineInputBorder(),
+              suffixIcon: Icon(Icons.search),
+            ),
+            onChanged: (value) {
+              searchQuery.value = value;
             },
           ),
-        );
-      }
-    });
+        ),
+        Expanded(
+          child: Obx(() {
+            if (controller.isLoading.value) {
+              return const Center(child: CircularProgressIndicator());
+            } else if (controller.contacts.isEmpty) {
+              return const Center(child: Text('No contacts found.'));
+            } else {
+              final filteredContacts = controller.contacts.where((contact) {
+                final query = searchQuery.value.toLowerCase();
+                return contact.firstName.toLowerCase().contains(query) || contact.lastName.toLowerCase().contains(query);
+              }).toList();
+              final groupedContacts = _groupContactsByFirstChar(filteredContacts);
+              return RefreshIndicator(
+                onRefresh: () async {
+                  await controller.fetchContacts();
+                },
+                child: ListView.builder(
+                  itemCount: groupedContacts.length,
+                  itemBuilder: (context, index) {
+                    final group = groupedContacts.entries.elementAt(index);
+                    return _buildGroup(context, group.key, group.value);
+                  },
+                ),
+              );
+            }
+          }),
+        ),
+      ],
+    );
   }
 
   Map<String, List<Contact>> _groupContactsByFirstChar(List<Contact> contacts) {
@@ -58,9 +87,13 @@ class HomeContent extends GetView<HomeController> {
               children: [
                 Text(
                   groupKey,
-                  style: Theme.of(context).textTheme.titleMedium,
+                  style: TextStyle(
+                    fontSize: 15,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.blue,
+                  ),
                 ),
-                const Divider(),
+                const Divider(color: AppColors.darkGray),
               ],
             )),
         ...contacts.map(
