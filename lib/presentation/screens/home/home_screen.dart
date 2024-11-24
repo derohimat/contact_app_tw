@@ -1,3 +1,4 @@
+import 'package:contact_app_tw/data/services/secure_storage_service.dart';
 import 'package:contact_app_tw/styles/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _pageController = PageController(initialPage: _currentIndex);
-    Get.put(ProfileController());
   }
 
   @override
@@ -41,11 +41,15 @@ class _HomeScreenState extends State<HomeScreen> {
                 TextButton(
                   onPressed: () {
                     // Implement logout functionality
+                    SecureStorageService.clearLoggedInUserId();
                     Get.offAllNamed('/');
                   },
                   child: const Text(
                     'Logout',
-                    style: TextStyle(color: AppColors.blue),
+                    style: TextStyle(
+                      color: AppColors.blue,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ]

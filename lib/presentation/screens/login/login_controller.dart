@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import '../../../data/models/contact.dart';
 import '../../../data/repositories/contact_repository.dart';
 import '../../../data/services/secure_storage_service.dart';
+import '../home/home_binding.dart';
 import '../home/home_screen.dart';
 
 class LoginController extends GetxController {
@@ -26,7 +27,10 @@ class LoginController extends GetxController {
       // Store the logged-in user's ID using SecureStorageService
       await SecureStorageService.setLoggedInUserId(loggedInUser.id);
 
-      Get.offAll(() => const HomeScreen());
+      Get.to(
+        () => const HomeScreen(),
+        binding: HomeBinding(loggedInUser.id),
+      );
     } else {
       Get.snackbar('Error', 'Invalid ID', snackPosition: SnackPosition.BOTTOM);
     }

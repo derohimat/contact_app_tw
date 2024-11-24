@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 
+import '../profile/profile_controller.dart';
 import 'home_controller.dart';
 
 class HomeBinding extends Bindings {
@@ -9,6 +10,7 @@ class HomeBinding extends Bindings {
 
   @override
   void dependencies() {
-    Get.put(HomeController(loggedInUserId));
+    Get.lazyPut<HomeController>(() => HomeController(loggedInUserId));
+    Get.lazyPut<ProfileController>(() => ProfileController());
   }
 }

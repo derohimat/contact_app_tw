@@ -73,11 +73,12 @@ class MyApp extends StatelessWidget {
           page: () => const LoginScreen(),
           binding: LoginBinding(),
         ),
-        GetPage(
-          name: '/home',
-          page: () => const HomeScreen(),
-          binding: HomeBinding(loggedInUserId!),
-        ),
+        if (loggedInUserId != null)
+          GetPage(
+            name: '/home',
+            page: () => const HomeScreen(),
+            binding: HomeBinding(loggedInUserId!),
+          ),
         GetPage(
           name: '/profile',
           page: () => const ProfileScreen(),
