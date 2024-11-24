@@ -2,46 +2,51 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
-import '../home/home_controller.dart';
+import '../../../data/repositories/contact_repository.dart';
 
 class ContactDetailController extends GetxController {
-  late final TextEditingController firstNameController;
-  late final TextEditingController lastNameController;
-  late final TextEditingController emailController;
-  late final TextEditingController dobController;
-  final contact = Get.arguments as Contact;
+  final ContactRepository _repository = ContactRepository();
+  final contact = Contact(id: '', firstName: '', lastName: '', email: '', dob: '', phone: '').obs;
+  final firstNameController = TextEditingController();
+  final lastNameController = TextEditingController();
+  final emailController = TextEditingController();
+  final phoneController = TextEditingController();
+  final dobController = TextEditingController();
+  final isEmailValid = true.obs;
+  final isPhoneValid = true.obs;
 
   @override
   void onInit() {
     super.onInit();
-    firstNameController = TextEditingController(text: contact.firstName);
-    lastNameController = TextEditingController(text: contact.lastName);
-    emailController = TextEditingController(text: contact.email);
-    dobController = TextEditingController(text: contact.dob);
+    final Contact initialContact = Get.arguments;
+    contact.value = initialContact;
+    firstNameController.text = initialContact.firstName;
+    lastNameController.text = initialContact.lastName;
+    emailController.text = initialContact.email;
+    phoneController.text = initialContact.phone;
+    dobController.text = initialContact.dob;
   }
 
-  @override
-  void onClose() {
-    firstNameController.dispose();
-    lastNameController.dispose();
-    emailController.dispose();
-    dobController.dispose();
-    super.onClose();
+  void validateEmail(String email) {
+    isEmailValid.value = email.contains('@') && email.contains('.com');
+  }
+
+  void validatePhone(String phone) {
+    isPhoneValid.value = phone.length >= 10;
+  }
+
+  bool validateForm() {
+    return firstNameController.text.isNotEmpty &&
+        lastNameController.text.isNotEmpty &&
+        (emailController.text.isEmpty || isEmailValid.value) &&
+        (phoneController.text.isEmpty || isPhoneValid.value);
   }
 
   Future<void> updateContact(Contact updatedContact) async {
-    try {
-      // 1. Find the index of the contact to update
-      final index = Get.find<HomeController>().contacts.indexWhere((contact) => contact.id == updatedContact.id);
+    await _repository.updateContact(updatedContact);
+  }
 
-      // 2. Update the contact in the list
-      if (index != -1) {
-        Get.find<HomeController>().contacts[index] = updatedContact;
-      }
-    } catch (e) {
-      // Handle error
-      debugPrint('Error updating contact: $e');
-      Get.snackbar('Error', 'Failed to update contact', snackPosition: SnackPosition.BOTTOM);
-    }
+  Future<void> removeContact() async {
+    await _repository.removeContact(contact.value.id);
   }
 }

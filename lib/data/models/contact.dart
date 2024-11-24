@@ -4,6 +4,7 @@ class Contact {
   final String lastName;
   final String email;
   final String dob;
+  final String phone;
 
   Contact({
     required this.id,
@@ -11,6 +12,7 @@ class Contact {
     required this.lastName,
     this.email = '',
     this.dob = '',
+    this.phone = '',
   });
 
   // Factory constructor to create a Contact from JSON
@@ -20,8 +22,8 @@ class Contact {
       firstName: json['firstName'],
       lastName: json['lastName'],
       email: json['email'] ?? '',
-      // Handle null values
-      dob: json['dob'] ?? '', // Handle null values
+      dob: json['dob'] ?? '',
+      phone: json['phone'] ?? '',
     );
   }
 }

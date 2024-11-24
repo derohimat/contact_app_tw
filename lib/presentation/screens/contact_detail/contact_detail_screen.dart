@@ -13,18 +13,21 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Contact Details')),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Center(
-              child: InitialAvatar(
-                firstName: controller.contact.firstName,
-                lastName: controller.contact.lastName,
-                size: 100,
-                textSize: 40,
-              ),
+              child: Obx(() {
+                final contact = controller.contact.value;
+                return InitialAvatar(
+                  firstName: contact.firstName,
+                  lastName: contact.lastName,
+                  size: 100,
+                  textSize: 40,
+                );
+              }),
             ),
             const SizedBox(height: 24.0),
             Text(
@@ -47,6 +50,7 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                   color: AppColors.blue,
                 ),
               ),
+              textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: 16.0),
             Text(
@@ -63,6 +67,7 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                   color: AppColors.blue,
                 ),
               ),
+              textInputAction: TextInputAction.next,
             ),
             const SizedBox(height: 24.0),
             Text(
@@ -86,7 +91,48 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                 ),
               ),
               keyboardType: TextInputType.emailAddress,
+              textInputAction: TextInputAction.next,
+              onChanged: (value) {
+                controller.validateEmail(value);
+              },
             ),
+            Obx(() {
+              return controller.isEmailValid.value
+                  ? const SizedBox.shrink()
+                  : const Text(
+                      'Invalid email format',
+                      style: TextStyle(color: Colors.red),
+                    );
+            }),
+            const SizedBox(height: 16.0),
+            Text(
+              "Phone",
+              style: TextStyle(color: AppColors.black, fontSize: 15.0),
+            ),
+            const SizedBox(height: 8.0),
+            TextField(
+              controller: controller.phoneController,
+              decoration: const InputDecoration(
+                labelText: 'Phone',
+                prefixIcon: Icon(
+                  Icons.phone,
+                  color: AppColors.blue,
+                ),
+              ),
+              keyboardType: TextInputType.phone,
+              textInputAction: TextInputAction.next,
+              onChanged: (value) {
+                controller.validatePhone(value);
+              },
+            ),
+            Obx(() {
+              return controller.isPhoneValid.value
+                  ? const SizedBox.shrink()
+                  : const Text(
+                      'Invalid phone number',
+                      style: TextStyle(color: Colors.red),
+                    );
+            }),
             const SizedBox(height: 16.0),
             Text(
               "Date of Birth",
@@ -103,7 +149,6 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                 ),
               ),
               onTap: () async {
-                // Show date picker
                 final DateTime? pickedDate = await showDatePicker(
                   context: context,
                   initialDate: DateTime.now(),
@@ -118,25 +163,25 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
             const SizedBox(height: 16.0),
             ElevatedButton(
               onPressed: () async {
-                // Update contact
-                final updatedContact = Contact(
-                  id: controller.contact.id,
-                  firstName: controller.firstNameController.text,
-                  lastName: controller.lastNameController.text,
-                  email: controller.emailController.text,
-                  dob: controller.dobController.text,
-                );
-                await controller.updateContact(updatedContact);
-
-                // Go back to the previous screen with the updated contact
-                Get.back(result: updatedContact);
+                if (controller.validateForm()) {
+                  final updatedContact = Contact(
+                    id: controller.contact.value.id,
+                    firstName: controller.firstNameController.text,
+                    lastName: controller.lastNameController.text,
+                    email: controller.emailController.text,
+                    dob: controller.dobController.text,
+                    phone: controller.phoneController.text,
+                  );
+                  await controller.updateContact(updatedContact);
+                  Get.back(result: updatedContact);
+                }
               },
               child: const Text('Update'),
             ),
             ElevatedButton(
               onPressed: () {
-                // TODO: Remove contact
-                // Get.back(result: 'remove');
+                controller.removeContact();
+                Get.back();
               },
               child: const Text('Remove'),
             ),

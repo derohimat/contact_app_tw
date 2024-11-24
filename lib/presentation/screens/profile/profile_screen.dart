@@ -27,7 +27,6 @@ class ProfileScreen extends GetView<ProfileController> {
               ),
             ),
             const SizedBox(height: 24.0),
-            const SizedBox(height: 8.0),
             Text(
               "${contact.firstName} ${contact.lastName}",
               style: TextStyle(fontSize: 15.0),
@@ -35,6 +34,11 @@ class ProfileScreen extends GetView<ProfileController> {
             const SizedBox(height: 16.0),
             Text(
               contact.email,
+              style: TextStyle(fontSize: 15.0),
+            ),
+            const SizedBox(height: 16.0),
+            Text(
+              contact.phone,
               style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 16.0),
