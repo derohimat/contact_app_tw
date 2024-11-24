@@ -119,18 +119,17 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
             ElevatedButton(
               onPressed: () async {
                 // Update contact
-                await controller.updateContact(
-                  Contact(
-                    id: controller.contact.id,
-                    firstName: controller.firstNameController.text,
-                    lastName: controller.lastNameController.text,
-                    email: controller.emailController.text,
-                    dob: controller.dobController.text,
-                  ),
+                final updatedContact = Contact(
+                  id: controller.contact.id,
+                  firstName: controller.firstNameController.text,
+                  lastName: controller.lastNameController.text,
+                  email: controller.emailController.text,
+                  dob: controller.dobController.text,
                 );
+                await controller.updateContact(updatedContact);
 
-                // Go back to the previous screen
-                Get.back();
+                // Go back to the previous screen with the updated contact
+                Get.back(result: updatedContact);
               },
               child: const Text('Update'),
             ),

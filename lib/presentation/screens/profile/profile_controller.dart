@@ -3,11 +3,11 @@ import 'package:get/get.dart';
 import '../../../data/models/contact.dart';
 
 class ProfileController extends GetxController {
-  late Contact contact;
+  var contact = Contact(id: '', firstName: '', lastName: '', email: '', dob: '').obs;
 
   void updateProfileData({
-    required Contact contact,
+    required Contact newContact,
   }) {
-    this.contact = contact;
+    contact.value = newContact;
   }
 }

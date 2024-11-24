@@ -79,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
           });
 
           if (index == 1 && user != null) {
-            Get.find<ProfileController>().updateProfileData(contact: user);
+            Get.find<ProfileController>().updateProfileData(newContact: user);
           }
         },
         showSelectedLabels: false,
