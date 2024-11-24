@@ -197,13 +197,13 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
                 child: const Text('Update'),
               ),
             ),
-            const SizedBox(height: 16.0),
+            const SizedBox(height: 8.0),
             SizedBox(
               width: double.infinity,
               child: OutlinedButton(
                 onPressed: () {
                   controller.removeContact();
-                  Get.back();
+                  Get.back(result: 'removed');
                 },
                 child: const Text('Remove'),
               ),

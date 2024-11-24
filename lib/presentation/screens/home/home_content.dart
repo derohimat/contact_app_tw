@@ -128,9 +128,13 @@ class HomeContent extends GetView<HomeController> {
                   arguments: contact,
                   binding: ContactDetailBinding(),
                 );
-                if (result != null && result is Contact) {
-                  final index = controller.contacts.indexOf(contact);
-                  controller.contacts[index] = result;
+                if (result != null) {
+                  if (result is Contact) {
+                    final index = controller.contacts.indexOf(contact);
+                    controller.contacts[index] = result;
+                  } else if (result == 'removed') {
+                    controller.fetchContacts();
+                  }
                 }
               },
             );
