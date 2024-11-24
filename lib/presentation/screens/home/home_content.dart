@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../data/models/contact.dart';
+import '../../widgets/initial_avatar.dart';
 import '../contact_detail/contact_binding.dart';
 import '../contact_detail/contact_detail_screen.dart';
 import 'home_controller.dart';
@@ -26,6 +27,10 @@ class HomeContent extends GetView<HomeController> {
             itemBuilder: (context, index) {
               final contact = controller.contacts[index];
               return ListTile(
+                leading: InitialAvatar(
+                  firstName: contact.firstName,
+                  lastName: contact.lastName,
+                ),
                 title: Text('${contact.firstName} ${contact.lastName}'),
                 onTap: () async {
                   final result = await Get.to(
