@@ -243,3 +243,6 @@ fabric.properties
 ### AndroidStudio Patch ###
 
 !/gradle/wrapper/gradle-wrapper.jar
+
+# Ignore pubspec.lock file
+pubspec.lock
