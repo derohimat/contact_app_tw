@@ -17,8 +17,8 @@ class ProfileScreen extends GetView<ProfileController> {
         children: [
           Center(
             child: InitialAvatar(
-              firstName: controller.contact.firstName.split(' ')[0],
-              lastName: controller.contact.lastName.split(' ')[0],
+              firstName: controller.contact.firstName,
+              lastName: controller.contact.lastName,
               size: 100,
               textSize: 40,
             ),
