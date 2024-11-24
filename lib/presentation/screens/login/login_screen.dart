@@ -21,9 +21,12 @@ class LoginScreen extends GetView<LoginController> {
               decoration: const InputDecoration(labelText: 'User ID'),
             ),
             const SizedBox(height: 20),
-            ElevatedButton(
-              onPressed: controller.login,
-              child: const Text('Login'),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: controller.login,
+                child: const Text('Login'),
+              ),
             ),
           ],
         ),

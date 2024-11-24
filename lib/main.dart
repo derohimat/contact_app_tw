@@ -40,11 +40,32 @@ class MyApp extends StatelessWidget {
         textTheme: GoogleFonts.poppinsTextTheme(
           Theme.of(context).textTheme,
         ),
-        buttonTheme: ButtonThemeData(
-          buttonColor: AppColors.blue,
-          textTheme: ButtonTextTheme.primary,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(8.0),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: WidgetStateProperty.all<Color>(AppColors.lightBlue),
+            textStyle: WidgetStateProperty.all<TextStyle>(
+              const TextStyle(color: AppColors.blue, fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            shape: WidgetStateProperty.all<OutlinedBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
+          ),
+        ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: ButtonStyle(
+            side: WidgetStateProperty.all<BorderSide>(
+              BorderSide(color: AppColors.red, width: 0.5),
+            ),
+            textStyle: WidgetStateProperty.all<TextStyle>(
+              const TextStyle(color: AppColors.red, fontSize: 16.0, fontWeight: FontWeight.bold),
+            ),
+            shape: WidgetStateProperty.all<OutlinedBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+              ),
+            ),
           ),
         ),
         inputDecorationTheme: InputDecorationTheme(
@@ -58,9 +79,9 @@ class MyApp extends StatelessWidget {
           ),
           hintStyle: WidgetStateTextStyle.resolveWith((Set<WidgetState> states) {
             if (states.contains(WidgetState.focused)) {
-              return TextStyle(color: AppColors.blue);
+              return const TextStyle(color: AppColors.blue);
             }
-            return TextStyle(color: AppColors.darkGray);
+            return const TextStyle(color: AppColors.darkGray);
           }),
           labelStyle: TextStyle(color: AppColors.darkGray.withOpacity(0.6)),
           floatingLabelBehavior: FloatingLabelBehavior.never,

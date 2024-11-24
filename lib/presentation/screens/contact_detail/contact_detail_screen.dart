@@ -177,29 +177,36 @@ class ContactDetailScreen extends GetView<ContactDetailController> {
               },
             ),
             const SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: () async {
-                if (controller.validateForm()) {
-                  final updatedContact = Contact(
-                    id: controller.contact.value.id,
-                    firstName: controller.firstNameController.text,
-                    lastName: controller.lastNameController.text,
-                    email: controller.emailController.text,
-                    dob: controller.dobController.text,
-                    phone: controller.phoneController.text,
-                  );
-                  await controller.updateContact(updatedContact);
-                  Get.back(result: updatedContact);
-                }
-              },
-              child: const Text('Update'),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                onPressed: () async {
+                  if (controller.validateForm()) {
+                    final updatedContact = Contact(
+                      id: controller.contact.value.id,
+                      firstName: controller.firstNameController.text,
+                      lastName: controller.lastNameController.text,
+                      email: controller.emailController.text,
+                      dob: controller.dobController.text,
+                      phone: controller.phoneController.text,
+                    );
+                    await controller.updateContact(updatedContact);
+                    Get.back(result: updatedContact);
+                  }
+                },
+                child: const Text('Update'),
+              ),
             ),
-            ElevatedButton(
-              onPressed: () {
-                controller.removeContact();
-                Get.back();
-              },
-              child: const Text('Remove'),
+            const SizedBox(height: 16.0),
+            SizedBox(
+              width: double.infinity,
+              child: OutlinedButton(
+                onPressed: () {
+                  controller.removeContact();
+                  Get.back();
+                },
+                child: const Text('Remove'),
+              ),
             ),
           ],
         ),

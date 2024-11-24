@@ -47,7 +47,8 @@ class ProfileScreen extends GetView<ProfileController> {
               style: TextStyle(fontSize: 15.0),
             ),
             const SizedBox(height: 24.0),
-            Center(
+            SizedBox(
+              width: double.infinity,
               child: ElevatedButton(
                 onPressed: () async {
                   final result = await Get.to(
